@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% block title %}Share Your Experience - MK Kaleeswari's Delight Cafe{% endblock %}
+{% block content %}
+<section class="py-5 bg-gradient" style="min-height: 100vh; background: linear-gradient(135deg, #98ff98 0%, #e8f5e9 100%);">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card border-0 shadow-custom rounded-4">
+                    <div class="card-body p-5">
+                        <div class="text-center mb-4">
+                            <h2 class="text-gradient mb-2" style="font-family: 'Playfair Display', serif;">Share Your Experience</h2>
+                            <p class="lead text-muted">We value your feedback to serve you better</p>
+                        </div>
+                        <form class="feedback-form" action="/submit-feedback" method="POST" enctype="multipart/form-data">
+                            <div class="row g-4">
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3">
+                                        <label for="name" class="form-label">Name:</label>
+                                        <input type="text" id="name" name="name" required class="form-control" placeholder="Your name">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group mb-3">
+                                        <label for="phone" class="form-label">Phone Number:</label>
+                                        <input type="text" id="phone" name="phone" required class="form-control" placeholder="Your contact number">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="experience" class="form-label">What did you try?</label>
+                                <input type="text" id="experience" name="experience" class="form-control" placeholder="E.g. Veg Wrap, Chicken Pizza, Iced Coffee">
+                            </div>
+                            <div class="form-group mb-3">
+                                <label class="form-label">Upload Image (optional):</label>
+                                <input type="file" name="image" accept="image/*" class="form-control">
+                            </div>
+                            <div class="form-group mb-4">
+                                <label class="form-label">Rate Us:</label>
+                                <div class="star-rating justify-content-center mb-2">
+                                    <input type="radio" id="star5" name="rating" value="5" /><label for="star5" title="5 stars" class="star">★</label>
+                                    <input type="radio" id="star4" name="rating" value="4" /><label for="star4" title="4 stars" class="star">★</label>
+                                    <input type="radio" id="star3" name="rating" value="3" /><label for="star3" title="3 stars" class="star">★</label>
+                                    <input type="radio" id="star2" name="rating" value="2" /><label for="star2" title="2 stars" class="star">★</label>
+                                    <input type="radio" id="star1" name="rating" value="1" /><label for="star1" title="1 star" class="star">★</label>
+                                </div>
+                            </div>
+                            <div class="form-group mb-4">
+                                <label for="comment" class="form-label">Comments:</label>
+                                <textarea id="comment" name="comment" rows="5" class="form-control" placeholder="Your detailed review... What did you like? How can we improve?"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-success btn-lg w-100">
+                                <i class="fas fa-paper-plane me-2"></i>Submit Feedback
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    // Show filename when file is selected
+    document.addEventListener('DOMContentLoaded', function() {
+        const fileInput = document.querySelector('input[type="file"]');
+        if (fileInput) {
+            fileInput.addEventListener('change', function(e) {
+                const fileName = e.target.files[0] ? e.target.files[0].name : 'No file selected';
+                fileInput.classList.add('is-valid');
+                fileInput.nextElementSibling && (fileInput.nextElementSibling.textContent = fileName);
+            });
+        }
+    });
+</script>
+<style>
+.star-rating {
+    direction: rtl;
+    display: flex;
+    justify-content: center;
+    gap: 0.2rem;
+}
+.star-rating input[type="radio"] {
+    display: none;
+}
+.star-rating label.star {
+    font-size: 2.5rem;
+    color: #ccc;
+    cursor: pointer;
+    transition: color 0.2s;
+    padding: 0 0.1em;
+}
+.star-rating input[type="radio"]:checked ~ label.star,
+.star-rating label.star:hover,
+.star-rating label.star:hover ~ label.star {
+    color: #ffc107;
+}
+.star-rating input[type="radio"]:checked ~ label.star {
+    color: #ffc107;
+}
+</style>
+{% endblock %} 

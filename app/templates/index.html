@@ -1,0 +1,209 @@
+{% extends "base.html" %}
+
+{% block title %}MK Kaleeswari's Delight Cafe - Home{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="hero-content">
+        <h1 class="hero-title cursive-text">
+            <i class="fas fa-coffee me-3 floating"></i>
+            Welcome to MK Kaleeswari's Delight Cafe
+        </h1>
+        <p class="hero-subtitle">
+            Experience the perfect blend of taste and comfort. 
+            From aromatic coffee to delicious meals, we serve happiness on every plate.
+        </p>
+        <div class="hero-buttons">
+            <a href="{{ url_for('main.menu') }}" class="btn btn-primary btn-lg glow">
+                <i class="fas fa-utensils me-2"></i>
+                Explore Our Menu
+            </a>
+            <a href="{{ url_for('main.cart_view') }}" class="btn btn-outline btn-lg">
+                <i class="fas fa-shopping-cart me-2"></i>
+                View Cart
+            </a>
+        </div>
+    </div>
+    
+    <!-- Floating Elements -->
+    <div class="position-absolute top-0 start-0 w-100 h-100" style="pointer-events: none; z-index: -1;">
+        <div class="position-absolute" style="top: 20%; left: 10%; animation: floating 6s ease-in-out infinite;">
+            <i class="fas fa-coffee text-warning" style="font-size: 3rem; opacity: 0.3;"></i>
+        </div>
+        <div class="position-absolute" style="top: 60%; right: 15%; animation: floating 8s ease-in-out infinite reverse;">
+            <i class="fas fa-utensils text-primary" style="font-size: 2.5rem; opacity: 0.3;"></i>
+        </div>
+        <div class="position-absolute" style="top: 30%; right: 25%; animation: floating 7s ease-in-out infinite;">
+            <i class="fas fa-heart text-danger" style="font-size: 2rem; opacity: 0.3;"></i>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row text-center mb-5">
+            <div class="col-12">
+                <h2 class="text-gradient mb-3">Why Choose MK Delight Cafe?</h2>
+                <p class="lead">We bring you the best dining experience with quality ingredients and exceptional service</p>
+            </div>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 text-center border-0 shadow-custom">
+                    <div class="card-body p-4">
+                        <div class="mb-3">
+                            <i class="fas fa-star text-warning" style="font-size: 3rem;"></i>
+                        </div>
+                        <h4 class="card-title">Premium Quality</h4>
+                        <p class="card-text">We use only the finest ingredients to ensure every dish meets our high standards of quality and taste.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="card h-100 text-center border-0 shadow-custom">
+                    <div class="card-body p-4">
+                        <div class="mb-3">
+                            <i class="fas fa-clock text-primary" style="font-size: 3rem;"></i>
+                        </div>
+                        <h4 class="card-title">Quick Service</h4>
+                        <p class="card-text">Fast and efficient service to ensure you get your delicious food fresh and hot, right when you need it.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="card h-100 text-center border-0 shadow-custom">
+                    <div class="card-body p-4">
+                        <div class="mb-3">
+                            <i class="fas fa-heart text-danger" style="font-size: 3rem;"></i>
+                        </div>
+                        <h4 class="card-title">Made with Love</h4>
+                        <p class="card-text">Every dish is prepared with care and passion, ensuring a memorable dining experience for our customers.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Popular Categories Preview -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row text-center mb-5">
+            <div class="col-12">
+                <h2 class="text-gradient mb-3">Popular Categories</h2>
+                <p class="lead">Discover our most loved menu categories</p>
+            </div>
+        </div>
+        
+        <div class="row g-4">
+            {% for category in categories[:3] %}
+            <div class="col-md-4">
+                <div class="category-card h-100">
+                    <div class="position-relative overflow-hidden rounded-custom mb-3">
+                        <img src="{{ url_for('static', filename=category.image) }}" 
+                             alt="{{ category.name }}" 
+                             class="w-100"
+                             style="height: 200px; object-fit: cover;">
+                        <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark" style="opacity: 0.3;"></div>
+                    </div>
+                    <h3 class="h5">{{ category.name }}</h3>
+                    <a href="{{ url_for('main.items', category=category.name) }}" class="btn btn-primary btn-sm">
+                        <i class="fas fa-arrow-right me-1"></i>
+                        View Items
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="text-center mt-4">
+            <a href="{{ url_for('main.menu') }}" class="btn btn-outline btn-lg">
+                <i class="fas fa-utensils me-2"></i>
+                View Full Menu
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <div class="card border-0 shadow-custom">
+                    <div class="card-body p-5">
+                        <h2 class="text-gradient mb-3">Ready to Order?</h2>
+                        <p class="lead mb-4">Join us for an amazing culinary journey. Order now and experience the taste of perfection!</p>
+                        <div class="d-flex gap-3 justify-content-center flex-wrap">
+                            <a href="{{ url_for('main.menu') }}" class="btn btn-primary btn-lg">
+                                <i class="fas fa-utensils me-2"></i>
+                                Order Now
+                            </a>
+                            <a href="{{ url_for('main.cart_view') }}" class="btn btn-secondary btn-lg">
+                                <i class="fas fa-shopping-cart me-2"></i>
+                                View Cart
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Info -->
+<section class="py-5 bg-gradient text-white">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-4 mb-4">
+                <div class="d-flex align-items-center justify-content-center mb-3">
+                    <i class="fas fa-phone me-3" style="font-size: 2rem;"></i>
+                    <div>
+                        <h5 class="mb-1">Call Us</h5>
+                        <p class="mb-0">86680 88066 / 99421 67434</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 mb-4">
+                <div class="d-flex align-items-center justify-content-center mb-3">
+                    <i class="fas fa-clock me-3" style="font-size: 2rem;"></i>
+                    <div>
+                        <h5 class="mb-1">Opening Hours</h5>
+                        <p class="mb-0">8:00 AM - 10:00 PM</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4 mb-4">
+                <div class="d-flex align-items-center justify-content-center mb-3">
+                    <i class="fas fa-map-marker-alt me-3" style="font-size: 2rem;"></i>
+                    <div>
+                        <h5 class="mb-1">Location</h5>
+                        <p class="mb-0">RS Road, Vadamadurai</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Map Section (Example) -->
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <h3 class="mb-4 text-center">Find Us Here</h3>
+                <div class="ratio ratio-16x9 rounded shadow">
+                    <iframe src="https://www.google.com/maps?q=RS+Road,+Vadamadurai&output=embed" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

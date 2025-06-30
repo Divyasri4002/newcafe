@@ -1,0 +1,278 @@
+{% extends "base.html" %}
+
+{% block title %}Order Receipt - MK Delight Cafe{% endblock %}
+
+{% block content %}
+<!-- Receipt Header -->
+<section class="py-5 bg-gradient text-white">
+    <div class="container text-center">
+        <h1 class="display-4 mb-3">
+            <i class="fas fa-receipt me-3"></i>
+            Order Receipt
+        </h1>
+        <p class="lead">Your order details and payment confirmation</p>
+    </div>
+</section>
+
+<!-- Receipt Content -->
+<section class="py-5">
+    <div class="container">
+        {% if order %}
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="receipt">
+                    <!-- Receipt Header -->
+                    <div class="receipt-header">
+                        <div class="d-flex align-items-center justify-content-center mb-3">
+                            <i class="fas fa-coffee text-primary me-3" style="font-size: 3rem;"></i>
+                            <div>
+                                <h2 class="mb-1">MK Delight Cafe</h2>
+                                <p class="text-muted mb-0">Your delicious food partner</p>
+                            </div>
+                        </div>
+                        <div class="row text-center">
+                            <div class="col-md-4">
+                                <small class="text-muted">Order Date</small>
+                                <div class="fw-bold">{{ order.order_time or 'Today' }}</div>
+                            </div>
+                            <div class="col-md-4">
+                                <small class="text-muted">Pickup Time</small>
+                                <div class="fw-bold">{{ order.pickup_time }}</div>
+                            </div>
+                            <div class="col-md-4">
+                                <small class="text-muted">Status</small>
+                                <div class="fw-bold text-success">
+                                    <i class="fas fa-check-circle me-1"></i>Confirmed
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Customer Information -->
+                    <div class="mb-4">
+                        <h5 class="text-primary mb-3">
+                            <i class="fas fa-user me-2"></i>Customer Information
+                        </h5>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="fas fa-user text-muted me-2"></i>
+                                    <span><strong>Name:</strong> {{ order.name }}</span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="d-flex align-items-center mb-2">
+                                    <i class="fas fa-phone text-muted me-2"></i>
+                                    <span><strong>Phone:</strong> {{ order.phone }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        {% if order.notes %}
+                        <div class="d-flex align-items-start mt-2">
+                            <i class="fas fa-sticky-note text-muted me-2 mt-1"></i>
+                            <span><strong>Special Instructions:</strong> {{ order.notes }}</span>
+                        </div>
+                        {% endif %}
+                    </div>
+                    
+                    <!-- Order Items -->
+                    <div class="mb-4">
+                        <h5 class="text-primary mb-3">
+                            <i class="fas fa-utensils me-2"></i>Order Items
+                        </h5>
+                        <div class="table-responsive">
+                            <table class="table table-borderless">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Item</th>
+                                        <th class="text-center">Quantity</th>
+                                        <th class="text-end">Price</th>
+                                        <th class="text-end">Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in order['items'] %}
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="bg-light rounded-circle d-flex align-items-center justify-content-center me-3" 
+                                                     style="width: 40px; height: 40px;">
+                                                    <i class="fas fa-utensils text-primary"></i>
+                                                </div>
+                                                <div>
+                                                    <div class="fw-bold">{{ item.name }}</div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <span class="badge bg-primary">{{ item.quantity }}</span>
+                                        </td>
+                                        <td class="text-end">₹{{ item.price }}</td>
+                                        <td class="text-end fw-bold">₹{{ item.price * item.quantity }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <!-- Payment Summary -->
+                    <div class="mb-4">
+                        <div class="bg-light p-3 rounded">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="d-flex align-items-center mb-2">
+                                        <i class="fas fa-credit-card text-success me-2"></i>
+                                        <span><strong>Payment Method:</strong> UPI</span>
+                                    </div>
+                                    <div class="d-flex align-items-center">
+                                        <i class="fas fa-shield-alt text-primary me-2"></i>
+                                        <span><strong>Status:</strong> <span class="text-success">Paid</span></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="receipt-total">
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <span>Subtotal:</span>
+                                            <span>₹{{ order.total }}</span>
+                                        </div>
+                                        <div class="d-flex justify-content-between mb-2">
+                                            <span>Tax:</span>
+                                            <span>₹0</span>
+                                        </div>
+                                        <div class="d-flex justify-content-between fw-bold fs-5">
+                                            <span>Total Amount:</span>
+                                            <span class="text-primary">₹{{ order.total }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- WhatsApp Notification -->
+                    <div class="alert alert-success border-0 mb-4">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-whatsapp text-success me-3" style="font-size: 2rem;"></i>
+                            <div>
+                                <h6 class="mb-1">WhatsApp Notification Sent!</h6>
+                                <p class="mb-0 small">The cafe owner has been notified about your order via WhatsApp.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Action Buttons -->
+                    <div class="d-flex gap-3 justify-content-center flex-wrap">
+                        <button class="btn btn-primary" onclick="window.print()">
+                            <i class="fas fa-print me-2"></i>Print Receipt
+                        </button>
+                        <a href="{{ url_for('main.index') }}" class="btn btn-outline">
+                            <i class="fas fa-home me-2"></i>Back to Home
+                        </a>
+                        <a href="{{ url_for('main.menu') }}" class="btn btn-secondary">
+                            <i class="fas fa-utensils me-2"></i>Order Again
+                        </a>
+                    </div>
+                    <div class="text-center mt-4">
+                        <a href="{{ url_for('main.feedback') }}" class="btn btn-success btn-lg">
+                            <i class="fas fa-comment-dots me-2"></i>Share Your Experience
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="row justify-content-center">
+            <div class="col-lg-6 text-center">
+                <div class="card border-0 shadow-custom">
+                    <div class="card-body p-5">
+                        <div class="mb-4">
+                            <i class="fas fa-receipt text-muted" style="font-size: 4rem;"></i>
+                        </div>
+                        <h3 class="text-muted mb-3">No Order Found</h3>
+                        <p class="text-muted mb-4">It seems there's no order to display. Please place an order first.</p>
+                        <div class="d-flex gap-3 justify-content-center flex-wrap">
+                            <a href="{{ url_for('main.menu') }}" class="btn btn-primary">
+                                <i class="fas fa-utensils me-2"></i>Browse Menu
+                            </a>
+                            <a href="{{ url_for('main.index') }}" class="btn btn-outline">
+                                <i class="fas fa-home me-2"></i>Back to Home
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Contact Information -->
+{% if order %}
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h2 class="text-gradient mb-4">
+                    <i class="fas fa-info-circle me-3"></i>
+                    Need Help?
+                </h2>
+                <p class="lead mb-4">Contact us if you have any questions about your order</p>
+                
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="card border-0 shadow-custom h-100">
+                            <div class="card-body text-center">
+                                <div class="mb-3">
+                                    <i class="fas fa-phone text-primary" style="font-size: 2.5rem;"></i>
+                                </div>
+                                <h5>Call Us</h5>
+                                <p class="text-muted">+91 9043479513</p>
+                                <a href="tel:+919043479513" class="btn btn-outline btn-sm">
+                                    <i class="fas fa-phone me-1"></i>Call Now
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <div class="card border-0 shadow-custom h-100">
+                            <div class="card-body text-center">
+                                <div class="mb-3">
+                                    <i class="fas fa-clock text-warning" style="font-size: 2.5rem;"></i>
+                                </div>
+                                <h5>Opening Hours</h5>
+                                <p class="text-muted">8:00 AM - 10:00 PM</p>
+                                <span class="badge bg-success">Open Now</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <div class="card border-0 shadow-custom h-100">
+                            <div class="card-body text-center">
+                                <div class="mb-3">
+                                    <i class="fas fa-map-marker-alt text-danger" style="font-size: 2.5rem;"></i>
+                                </div>
+                                <h5>Location</h5>
+                                <p class="text-muted">Your Location</p>
+                                <a href="#" class="btn btn-outline btn-sm">
+                                    <i class="fas fa-directions me-1"></i>Get Directions
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Print Styles -->
+<style media="print">
+    .navbar, .footer, .btn { display: none !important; }
+    .receipt { box-shadow: none !important; border: 2px solid #000 !important; }
+    body { background: white !important; }
+</style>
+{% endblock %}

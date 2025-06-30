@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+
+{% block title %}Menu - MK Delight Cafe{% endblock %}
+
+{% block content %}
+<!-- Menu Header -->
+<section class="py-5 bg-gradient text-white">
+    <div class="container text-center">
+        <h1 class="display-4 mb-3">
+            <i class="fas fa-utensils me-3"></i>
+            Our Menu
+        </h1>
+        <p class="lead">Discover our delicious selection of food and beverages</p>
+    </div>
+</section>
+
+<!-- Menu Categories -->
+<section class="menu-categories">
+    <div class="container">
+        <div class="row g-4">
+            {% for category in categories %}
+            <div class="col-lg-4 col-md-6">
+                <div class="category-card h-100">
+                    <div class="position-relative overflow-hidden rounded-custom mb-3">
+                        <img src="{{ url_for('static', filename=category.image) }}" 
+                             alt="{{ category.name }}" 
+                             class="w-100"
+                             style="height: 250px; object-fit: cover;">
+                        <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark" style="opacity: 0.4;"></div>
+                    </div>
+                    <div class="text-center mb-2">
+                        <h3 class="h4 mb-2" style="color: var(--secondary-color);">{{ category.name }}</h3>
+                    </div>
+                    <div class="text-center">
+                        <p class="text-muted mb-3">Explore our delicious {{ category.name.lower() }} selection</p>
+                        <a href="{{ url_for('main.items', category=category.name) }}" class="btn btn-primary">
+                            <i class="fas fa-arrow-right me-2"></i>
+                            View Items
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Special Offers -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row text-center mb-5">
+            <div class="col-12">
+                <h2 class="text-gradient mb-3">
+                    <i class="fas fa-gift me-3"></i>
+                    Special Offers
+                </h2>
+                <p class="lead">Don't miss out on our amazing deals and discounts</p>
+            </div>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="card border-0 shadow-custom h-100">
+                    <div class="card-body p-4">
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fas fa-percentage text-warning me-3" style="font-size: 2rem;"></i>
+                            <div>
+                                <h4 class="card-title mb-1">Combo Deals</h4>
+                                <p class="text-muted mb-0">Save up to 20% on combo meals</p>
+                            </div>
+                        </div>
+                        <p class="card-text">Get the best value with our specially curated combo meals. Perfect for sharing or enjoying alone!</p>
+                        <a href="{{ url_for('main.items', category='Combos') }}" class="btn btn-outline">
+                            <i class="fas fa-utensils me-2"></i>
+                            View Combos
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="card border-0 shadow-custom h-100">
+                    <div class="card-body p-4">
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fas fa-clock text-primary me-3" style="font-size: 2rem;"></i>
+                            <div>
+                                <h4 class="card-title mb-1">Happy Hours</h4>
+                                <p class="text-muted mb-0">Special discounts on beverages</p>
+                            </div>
+                        </div>
+                        <p class="card-text">Enjoy our refreshing beverages at special prices during happy hours. Perfect way to beat the heat!</p>
+                        <a href="{{ url_for('main.items', category='Fresh Juice') }}" class="btn btn-outline">
+                            <i class="fas fa-glass-whiskey me-2"></i>
+                            View Beverages
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <div class="card border-0 shadow-custom">
+                    <div class="card-body p-5">
+                        <h2 class="text-gradient mb-3">
+                            <i class="fas fa-shopping-cart me-3"></i>
+                            Ready to Order?
+                        </h2>
+                        <p class="lead mb-4">Browse our menu, add your favorite items to cart, and enjoy a delicious meal!</p>
+                        <div class="d-flex gap-3 justify-content-center flex-wrap">
+                            <a href="{{ url_for('main.cart_view') }}" class="btn btn-primary btn-lg">
+                                <i class="fas fa-shopping-cart me-2"></i>
+                                View Cart
+                            </a>
+                            <a href="{{ url_for('main.index') }}" class="btn btn-secondary btn-lg">
+                                <i class="fas fa-home me-2"></i>
+                                Back to Home
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

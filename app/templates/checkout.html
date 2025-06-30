@@ -1,0 +1,377 @@
+{% extends "base.html" %}
+
+{% block title %}Checkout - MK Delight Cafe{% endblock %}
+
+{% block content %}
+<!-- Checkout Header -->
+<section class="py-5 bg-gradient text-white">
+    <div class="container text-center">
+        <h1 class="display-4 mb-3">
+            <i class="fas fa-credit-card me-3"></i>
+            Checkout
+        </h1>
+        <p class="lead">Complete your order and enjoy your delicious meal</p>
+    </div>
+</section>
+
+<!-- Checkout Content -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="checkout-form">
+                    <div class="d-flex align-items-center mb-4">
+                        <i class="fas fa-user text-primary me-3" style="font-size: 2rem;"></i>
+                        <h3 class="mb-0">Customer Information</h3>
+                    </div>
+                    
+                    <form id="checkoutForm">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="name" class="form-label">
+                                    <i class="fas fa-user me-2"></i>Full Name *
+                                </label>
+                                <input type="text" id="name" name="name" required class="form-control" 
+                                       placeholder="Enter your full name">
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="phone" class="form-label">
+                                    <i class="fas fa-phone me-2"></i>Phone Number *
+                                </label>
+                                <input type="tel" id="phone" name="phone" required class="form-control" 
+                                       placeholder="Enter your phone number">
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="pickup_date" class="form-label">
+                                    <i class="fas fa-calendar me-2"></i>Pickup Date *
+                                </label>
+                                <input type="date" id="pickup_date" name="pickup_date" required class="form-control">
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="pickup_time" class="form-label">
+                                    <i class="fas fa-clock me-2"></i>Expected Pickup Time *
+                                </label>
+                                <input type="text" id="pickup_time" name="pickup_time" required class="form-control" 
+                                       placeholder="e.g. 2:30 PM, 6:45 PM">
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <label for="notes" class="form-label">
+                                <i class="fas fa-sticky-note me-2"></i>Special Instructions
+                            </label>
+                            <textarea id="notes" name="notes" class="form-control" rows="3" 
+                                      placeholder="Any special instructions or requests..."></textarea>
+                        </div>
+                    </form>
+
+                    <div id="paymentStatus" class="alert" style="display: none;"></div>
+                    
+                    <div class="d-grid">
+                        <button class="btn btn-primary btn-lg" onclick="payNow()" id="payButton">
+                            <span id="payButtonText">
+                                <i class="fas fa-credit-card me-2"></i>Pay Now
+                            </span>
+                            <span id="payButtonSpinner" class="spinner-border spinner-border-sm ms-2" style="display: none;"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4">
+                <div class="order-summary">
+                    <h5 class="mb-4">
+                        <i class="fas fa-receipt me-2"></i>
+                        Order Summary
+                    </h5>
+                    <div id="orderSummary">
+                        <!-- Order summary will be rendered by JavaScript -->
+                    </div>
+                </div>
+                
+                <!-- Payment Info -->
+                <div class="card border-0 shadow-custom mt-4">
+                    <div class="card-header bg-light">
+                        <h6 class="mb-0">
+                            <i class="fas fa-shield-alt me-2"></i>
+                            Secure Payment
+                        </h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fas fa-lock text-success me-2"></i>
+                            <span class="small">Your payment is secured by Razorpay</span>
+                        </div>
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fas fa-mobile-alt text-primary me-2"></i>
+                            <span class="small">Pay using UPI for instant confirmation</span>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-clock text-warning me-2"></i>
+                            <span class="small">Quick pickup after payment</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Contact Info -->
+                <div class="card border-0 shadow-custom mt-4">
+                    <div class="card-header bg-light">
+                        <h6 class="mb-0">
+                            <i class="fas fa-info-circle me-2"></i>
+                            Need Help?
+                        </h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-2">
+                            <i class="fas fa-phone text-primary me-2"></i>
+                            <span class="small">+91 9043479513</span>
+                        </div>
+                        <div class="d-flex align-items-center mb-2">
+                            <i class="fas fa-clock text-warning me-2"></i>
+                            <span class="small">8:00 AM - 10:00 PM</span>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-map-marker-alt text-danger me-2"></i>
+                            <span class="small">Your Location</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row text-center mb-5">
+            <div class="col-12">
+                <h2 class="text-gradient mb-3">
+                    <i class="fas fa-star me-3"></i>
+                    Why Choose Us?
+                </h2>
+                <p class="lead">Experience the best in food ordering</p>
+            </div>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card border-0 shadow-custom h-100 text-center">
+                    <div class="card-body p-4">
+                        <div class="mb-3">
+                            <i class="fas fa-bolt text-warning" style="font-size: 3rem;"></i>
+                        </div>
+                        <h5 class="card-title">Fast Service</h5>
+                        <p class="card-text">Quick preparation and pickup for your convenience</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="card border-0 shadow-custom h-100 text-center">
+                    <div class="card-body p-4">
+                        <div class="mb-3">
+                            <i class="fas fa-leaf text-success" style="font-size: 3rem;"></i>
+                        </div>
+                        <h5 class="card-title">Fresh Ingredients</h5>
+                        <p class="card-text">We use only the freshest and highest quality ingredients</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="card border-0 shadow-custom h-100 text-center">
+                    <div class="card-body p-4">
+                        <div class="mb-3">
+                            <i class="fas fa-heart text-danger" style="font-size: 3rem;"></i>
+                        </div>
+                        <h5 class="card-title">Made with Love</h5>
+                        <p class="card-text">Every dish is prepared with care and passion</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+    // Load order summary on page load
+    window.addEventListener('DOMContentLoaded', function() {
+        loadOrderSummary();
+    });
+
+    function loadOrderSummary() {
+        const cart = getCart();
+        console.log('DEBUG: Cart contents in checkout:', cart);
+        const summaryDiv = document.getElementById('orderSummary');
+        
+        if (cart.length === 0) {
+            summaryDiv.innerHTML = '<p class="text-white-50">Your cart is empty. Please add items to proceed.</p>';
+            document.getElementById('payButton').disabled = true;
+            return;
+        }
+
+        let html = '';
+        cart.forEach(item => {
+            html += `
+                <div class="d-flex justify-content-between mb-2">
+                    <span class="text-white">${item.name}</span>
+                    <span class="text-white">₹${item.price * item.quantity}</span>
+                </div>
+            `;
+        });
+        
+        const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        html += `
+            <hr class="border-white">
+            <div class="d-flex justify-content-between fw-bold">
+                <span class="text-white">Total:</span>
+                <span class="text-white">₹${total}</span>
+            </div>
+        `;
+        
+        summaryDiv.innerHTML = html;
+    }
+
+    function showStatus(message, type = 'info') {
+        const statusDiv = document.getElementById('paymentStatus');
+        statusDiv.className = `alert alert-${type}`;
+        statusDiv.innerHTML = `
+            <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'danger' ? 'exclamation-circle' : 'info-circle'} me-2"></i>
+            ${message}
+        `;
+        statusDiv.style.display = 'block';
+    }
+
+    function hideStatus() {
+        document.getElementById('paymentStatus').style.display = 'none';
+    }
+
+    function setButtonLoading(loading) {
+        const button = document.getElementById('payButton');
+        const buttonText = document.getElementById('payButtonText');
+        const spinner = document.getElementById('payButtonSpinner');
+        
+        if (loading) {
+            button.disabled = true;
+            buttonText.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Processing...';
+            spinner.style.display = 'inline-block';
+        } else {
+            button.disabled = false;
+            buttonText.innerHTML = '<i class="fas fa-credit-card me-2"></i>Pay Now';
+            spinner.style.display = 'none';
+        }
+    }
+
+    async function notifyOwnerOfOrder() {
+        try {
+            console.log('Sending WhatsApp notification to owner...');
+            const response = await fetch('/payment-success-verify', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ status: 'success' })
+            });
+            
+            const result = await response.json();
+            console.log('WhatsApp notification result:', result);
+            
+            if (result.whatsapp_sent) {
+                console.log('✅ WhatsApp notification sent successfully to owner');
+            } else {
+                console.log('⚠️ WhatsApp notification failed, but payment was successful');
+            }
+        } catch (error) {
+            console.error('Error sending WhatsApp notification:', error);
+        }
+    }
+
+    function payNow() {
+        const form = document.getElementById('checkoutForm');
+        
+        // Validate form
+        if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
+        }
+
+        // Check if cart is empty
+        const cart = getCart();
+        if (cart.length === 0) {
+            showStatus('Your cart is empty. Please add items before proceeding.', 'warning');
+            return;
+        }
+
+        hideStatus();
+        setButtonLoading(true);
+
+        const formData = new FormData(form);
+
+        fetch('/create-order', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.error) {
+                throw new Error(data.error);
+            }
+
+            const options = {
+                key: data.key,
+                amount: data.amount,
+                currency: "INR",
+                name: "MK Delight Cafe",
+                description: "Cafe Order",
+                order_id: data.order_id,
+                handler: async function (response) {
+                    try {
+                        // Payment success
+                        console.log('Payment successful:', response);
+                        // Send WhatsApp notification to owner
+                        await notifyOwnerOfOrder();
+                        // Clear cart and redirect
+                        clearCart();
+                        window.location.href = "/receipt";
+                    } catch (err) {
+                        showStatus('Payment succeeded but an error occurred. Please contact support.', 'danger');
+                        setButtonLoading(false);
+                    }
+                },
+                prefill: {
+                    contact: formData.get("phone"),
+                    name: formData.get("name")
+                },
+                theme: {
+                    color: "#ff6b35"
+                },
+                modal: {
+                    ondismiss: function() {
+                        setButtonLoading(false);
+                    }
+                }
+            };
+
+            const rzp = new Razorpay(options);
+            rzp.open();
+        })
+        .catch(error => {
+            console.error('Payment initiation failed:', error);
+            showStatus('Failed to initiate payment. Please try again.', 'danger');
+            setButtonLoading(false);
+        });
+    }
+</script>
+{% endblock %}

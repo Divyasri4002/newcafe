@@ -1,0 +1,203 @@
+{% extends "base.html" %}
+
+{% block title %}Shopping Cart - MK Delight Cafe{% endblock %}
+
+{% block content %}
+<!-- Cart Header -->
+<section class="py-5 bg-gradient text-white">
+    <div class="container text-center">
+        <h1 class="display-4 mb-3">
+            <i class="fas fa-shopping-cart me-3"></i>
+            Your Cart
+        </h1>
+        <p class="lead">Review your order and proceed to checkout</p>
+    </div>
+</section>
+
+<!-- Cart Content -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="cart-container">
+                    <div class="d-flex align-items-center mb-4">
+                        <i class="fas fa-shopping-basket text-primary me-3" style="font-size: 2rem;"></i>
+                        <h3 class="mb-0">Order Summary</h3>
+                    </div>
+                    
+                    <div id="cartItems">
+                        <!-- Cart items will be loaded dynamically by JavaScript -->
+                    </div>
+                    
+                    <div class="text-center mt-4" id="emptyCartMessage" style="display: none;">
+                        <div class="mb-4">
+                            <i class="fas fa-shopping-cart text-muted" style="font-size: 4rem;"></i>
+                        </div>
+                        <h4 class="text-muted mb-3">Your cart is empty</h4>
+                        <p class="text-muted mb-4">Add some delicious items to get started!</p>
+                        <a href="{{ url_for('main.menu') }}" class="btn btn-primary btn-lg">
+                            <i class="fas fa-utensils me-2"></i>
+                            Browse Menu
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4">
+                <div class="card border-0 shadow-custom sticky-top" style="top: 2rem;">
+                    <div class="card-header bg-gradient text-white">
+                        <h5 class="mb-0">
+                            <i class="fas fa-receipt me-2"></i>
+                            Order Summary
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="orderSummary">
+                            <p class="text-muted">Loading order details...</p>
+                        </div>
+                        
+                        <hr>
+                        
+                        <div class="d-grid gap-2">
+                            <a href="{{ url_for('main.checkout') }}" class="btn btn-primary btn-lg" id="checkoutBtn" style="display: none;">
+                                <i class="fas fa-credit-card me-2"></i>
+                                Proceed to Checkout
+                            </a>
+                            <a href="{{ url_for('main.menu') }}" class="btn btn-outline">
+                                <i class="fas fa-plus me-2"></i>
+                                Add More Items
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Recommendations -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row text-center mb-5">
+            <div class="col-12">
+                <h2 class="text-gradient mb-3">
+                    <i class="fas fa-lightbulb me-3"></i>
+                    You Might Also Like
+                </h2>
+                <p class="lead">Add these popular items to complete your meal</p>
+            </div>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-md-3">
+                <div class="card border-0 shadow-custom h-100">
+                    <div class="position-relative overflow-hidden rounded-custom mb-3">
+                        <img src="https://via.placeholder.com/300x200/ff6b35/ffffff?text=Coffee" 
+                             alt="Coffee" 
+                             class="w-100"
+                             style="height: 150px; object-fit: cover;">
+                    </div>
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Hot Coffee</h5>
+                        <p class="text-muted">Perfect to start your day</p>
+                        <p class="price mb-3">₹50</p>
+                        <button class="btn btn-primary btn-sm w-100" onclick="addToCart('coffee_001', 'Hot Coffee', 50)">
+                            <i class="fas fa-plus me-2"></i>
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-3">
+                <div class="card border-0 shadow-custom h-100">
+                    <div class="position-relative overflow-hidden rounded-custom mb-3">
+                        <img src="https://via.placeholder.com/300x200/f7931e/ffffff?text=Dessert" 
+                             alt="Dessert" 
+                             class="w-100"
+                             style="height: 150px; object-fit: cover;">
+                    </div>
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Chocolate Cake</h5>
+                        <p class="text-muted">Sweet ending to your meal</p>
+                        <p class="price mb-3">₹120</p>
+                        <button class="btn btn-primary btn-sm w-100" onclick="addToCart('cake_001', 'Chocolate Cake', 120)">
+                            <i class="fas fa-plus me-2"></i>
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-3">
+                <div class="card border-0 shadow-custom h-100">
+                    <div class="position-relative overflow-hidden rounded-custom mb-3">
+                        <img src="https://via.placeholder.com/300x200/ffd23f/ffffff?text=Juice" 
+                             alt="Juice" 
+                             class="w-100"
+                             style="height: 150px; object-fit: cover;">
+                    </div>
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Fresh Juice</h5>
+                        <p class="text-muted">Refreshing and healthy</p>
+                        <p class="price mb-3">₹80</p>
+                        <button class="btn btn-primary btn-sm w-100" onclick="addToCart('juice_001', 'Fresh Juice', 80)">
+                            <i class="fas fa-plus me-2"></i>
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-3">
+                <div class="card border-0 shadow-custom h-100">
+                    <div class="position-relative overflow-hidden rounded-custom mb-3">
+                        <img src="https://via.placeholder.com/300x200/28a745/ffffff?text=Snacks" 
+                             alt="Snacks" 
+                             class="w-100"
+                             style="height: 150px; object-fit: cover;">
+                    </div>
+                    <div class="card-body text-center">
+                        <h5 class="card-title">French Fries</h5>
+                        <p class="text-muted">Crispy and delicious</p>
+                        <p class="price mb-3">₹90</p>
+                        <button class="btn btn-primary btn-sm w-100" onclick="addToCart('fries_001', 'French Fries', 90)">
+                            <i class="fas fa-plus me-2"></i>
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action -->
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <div class="card border-0 shadow-custom">
+                    <div class="card-body p-5">
+                        <h2 class="text-gradient mb-3">
+                            <i class="fas fa-heart me-3"></i>
+                            Love Our Food?
+                        </h2>
+                        <p class="lead mb-4">Share your experience with friends and family!</p>
+                        <div class="d-flex gap-3 justify-content-center flex-wrap">
+                            <a href="{{ url_for('main.index') }}" class="btn btn-primary">
+                                <i class="fas fa-home me-2"></i>
+                                Back to Home
+                            </a>
+                            <a href="{{ url_for('main.menu') }}" class="btn btn-outline">
+                                <i class="fas fa-utensils me-2"></i>
+                                Browse Menu
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

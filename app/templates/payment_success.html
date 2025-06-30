@@ -1,0 +1,243 @@
+{% extends "base.html" %}
+
+{% block title %}Payment Successful - MK Delight Cafe{% endblock %}
+
+{% block content %}
+<!-- Success Section -->
+<section class="success-page">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <div class="card border-0 shadow-custom">
+                    <div class="card-body p-5">
+                        <div class="success-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        
+                        <h1 class="text-gradient mb-3">
+                            <i class="fas fa-party-horn me-3"></i>
+                            Payment Successful!
+                        </h1>
+                        
+                        <p class="lead mb-4">
+                            Thank you for your order, <strong>{{ customer_name }}</strong>! 
+                            Your payment has been processed successfully.
+                        </p>
+                        
+                        <div class="alert alert-success border-0 shadow-sm">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-whatsapp text-success me-3" style="font-size: 2rem;"></i>
+                                <div class="text-start">
+                                    <h6 class="mb-1">WhatsApp Notification Sent!</h6>
+                                    <p class="mb-0 small">The owner has been notified about your order via WhatsApp.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row mt-5">
+                            <div class="col-md-4 mb-3">
+                                <div class="text-center">
+                                    <div class="mb-3">
+                                        <i class="fas fa-clock text-primary" style="font-size: 2.5rem;"></i>
+                                    </div>
+                                    <h6>Quick Pickup</h6>
+                                    <p class="text-muted small">Your order will be ready for pickup soon!</p>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-4 mb-3">
+                                <div class="text-center">
+                                    <div class="mb-3">
+                                        <i class="fas fa-receipt text-success" style="font-size: 2.5rem;"></i>
+                                    </div>
+                                    <h6>Order Receipt</h6>
+                                    <p class="text-muted small">View your order details and receipt</p>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-4 mb-3">
+                                <div class="text-center">
+                                    <div class="mb-3">
+                                        <i class="fas fa-phone text-warning" style="font-size: 2.5rem;"></i>
+                                    </div>
+                                    <h6>Contact Us</h6>
+                                    <p class="text-muted small">Call us if you have any questions</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex gap-3 justify-content-center flex-wrap mt-4">
+                            <a href="{{ url_for('main.receipt') }}" class="btn btn-primary btn-lg">
+                                <i class="fas fa-receipt me-2"></i>
+                                View Receipt
+                            </a>
+                            <a href="{{ url_for('main.index') }}" class="btn btn-outline btn-lg">
+                                <i class="fas fa-home me-2"></i>
+                                Back to Home
+                            </a>
+                            <a href="{{ url_for('main.menu') }}" class="btn btn-secondary btn-lg">
+                                <i class="fas fa-utensils me-2"></i>
+                                Order Again
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Order Status -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card border-0 shadow-custom">
+                    <div class="card-header bg-gradient text-white">
+                        <h5 class="mb-0">
+                            <i class="fas fa-tasks me-2"></i>
+                            Order Status
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-3 text-center mb-3">
+                                <div class="position-relative">
+                                    <div class="bg-success text-white rounded-circle d-inline-flex align-items-center justify-content-center" 
+                                         style="width: 60px; height: 60px;">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                    <div class="mt-2">
+                                        <small class="text-muted">Payment</small>
+                                        <div class="fw-bold text-success">Completed</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-3 text-center mb-3">
+                                <div class="position-relative">
+                                    <div class="bg-primary text-white rounded-circle d-inline-flex align-items-center justify-content-center" 
+                                         style="width: 60px; height: 60px;">
+                                        <i class="fas fa-utensils"></i>
+                                    </div>
+                                    <div class="mt-2">
+                                        <small class="text-muted">Preparation</small>
+                                        <div class="fw-bold text-primary">In Progress</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-3 text-center mb-3">
+                                <div class="position-relative">
+                                    <div class="bg-warning text-white rounded-circle d-inline-flex align-items-center justify-content-center" 
+                                         style="width: 60px; height: 60px;">
+                                        <i class="fas fa-clock"></i>
+                                    </div>
+                                    <div class="mt-2">
+                                        <small class="text-muted">Ready</small>
+                                        <div class="fw-bold text-warning">Waiting</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-3 text-center mb-3">
+                                <div class="position-relative">
+                                    <div class="bg-secondary text-white rounded-circle d-inline-flex align-items-center justify-content-center" 
+                                         style="width: 60px; height: 60px;">
+                                        <i class="fas fa-hand-holding-heart"></i>
+                                    </div>
+                                    <div class="mt-2">
+                                        <small class="text-muted">Pickup</small>
+                                        <div class="fw-bold text-secondary">Pending</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Information -->
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h2 class="text-gradient mb-4">
+                    <i class="fas fa-info-circle me-3"></i>
+                    Need Help?
+                </h2>
+                <p class="lead mb-4">We're here to help you with any questions about your order</p>
+                
+                <div class="row g-4">
+                    <div class="col-md-4">
+                        <div class="card border-0 shadow-custom h-100">
+                            <div class="card-body text-center">
+                                <div class="mb-3">
+                                    <i class="fas fa-phone text-primary" style="font-size: 2.5rem;"></i>
+                                </div>
+                                <h5>Call Us</h5>
+                                <p class="text-muted">+91 9043479513</p>
+                                <a href="tel:+919043479513" class="btn btn-outline btn-sm">
+                                    <i class="fas fa-phone me-1"></i>Call Now
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <div class="card border-0 shadow-custom h-100">
+                            <div class="card-body text-center">
+                                <div class="mb-3">
+                                    <i class="fas fa-clock text-warning" style="font-size: 2.5rem;"></i>
+                                </div>
+                                <h5>Opening Hours</h5>
+                                <p class="text-muted">8:00 AM - 10:00 PM</p>
+                                <span class="badge bg-success">Open Now</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <div class="card border-0 shadow-custom h-100">
+                            <div class="card-body text-center">
+                                <div class="mb-3">
+                                    <i class="fas fa-map-marker-alt text-danger" style="font-size: 2.5rem;"></i>
+                                </div>
+                                <h5>Location</h5>
+                                <p class="text-muted">Your Location</p>
+                                <a href="#" class="btn btn-outline btn-sm">
+                                    <i class="fas fa-directions me-1"></i>Get Directions
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Thank You Message -->
+<section class="py-5 bg-gradient text-white">
+    <div class="container text-center">
+        <h2 class="mb-3">
+            <i class="fas fa-heart me-3"></i>
+            Thank You for Choosing MK Delight Cafe!
+        </h2>
+        <p class="lead mb-4">We appreciate your business and hope you enjoy your delicious meal!</p>
+        <div class="d-flex gap-3 justify-content-center flex-wrap">
+            <a href="{{ url_for('main.menu') }}" class="btn btn-light btn-lg">
+                <i class="fas fa-utensils me-2"></i>
+                Order Again
+            </a>
+            <a href="{{ url_for('main.index') }}" class="btn btn-outline-light btn-lg">
+                <i class="fas fa-home me-2"></i>
+                Visit Homepage
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}
